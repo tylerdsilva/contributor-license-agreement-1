@@ -5,7 +5,7 @@ This repository contains public records of everyone who can contribute and make 
 Thank you for contributing  to our community. We welcome you to sign the contributor license agreement. The CLA can be signed in **either** personal capacity or on behalf of your employer. Please choose an appropriate agreement to sign(you can only sign one).
 ## How to sign the CLA in personal capacity
 
-Please follow these steps if you are contributing on your own personal capacity and not making Submissions in the course of work for my employer.
+Please follow these steps if you are contributing on your own personal capacity and not making Submissions in the course of work for your employer.
 
 1. Read the licence [personal_contributor_licence_agreement.md](https://github.com/aicore/contributor-license-agreement/blob/main/personal_contributor_licence_agreement.md)
 2. If you Agree with the terms and conditions, raise a pull request by adding your details to the end of the above file. Click this link to edit the file in github:  [personal_contributor_licence_agreement.md file](https://github.com/aicore/contributor-license-agreement/edit/main/personal_contributor_licence_agreement.md). 
