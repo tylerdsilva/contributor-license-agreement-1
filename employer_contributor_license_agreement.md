@@ -4,7 +4,7 @@ Thank you for your interest in contributing to Projects made available by CORE.A
 
 This Agreement version allows an entity to submit Contributions to CORE.AI, authorize Contributions submitted by its designated employees to the COER.AI, and grant copyright and patent licenses.
 
-If you have not already done so, please complete and sign, scan and email a pdf file of this Agreement to_________ (Email id). Please read this document carefully before signing and keep a copy for your records.
+Please read this document carefully before signing and keep a copy for your records.
 
 This CLA is agreed to by the party signing below ("You" or "Your"), and conveys certain license rights to CORE.AI for Your contributions to open source projects.
 
@@ -51,20 +51,12 @@ This CLA is effective as of the latest signature date below.
    ### 13. **HEADINGS FOR CONVENIENCE ONLY**. 
    Headings of parts and sub-parts under this Agreement are for convenience and organization only. Headings shall not affect the meaning of any provisions of this Agreement.
  
- 
-**I have sole ownership of intellectual property rights to my Submissions, and I am not making Submissions in the course of work for my employer.**
- 
-Name (“You”): ___________________________  
-Signature: ______________________________  
-Date: __________________________________  
-Email: _________________________________  
-Country: _______________________________
- 
- 
 **I am making Submissions in the course of work for my employer (or my employer has intellectual property rights in my Submissions by contract or applicable law). I have permission from my employer to make Submissions and enter into this CLA on behalf of my employer. By signing below, the defined term "You" includes me and my employer.**
  
-Name: _________________________________  
-Signature: ______________________________  
-Date: __________________________________  
-Email: __________________________________  
-Country: ________________________________
+I agree with all the terms and conditions above by providing my details in **table-A** and submitting a pull request to the [contributor-license-agreement](https://github.com/aicore/contributor-license-agreement) repository. The agreement is effective as on the date provided against my name in **table-a** as soon as the pull request is raised against [contributor-license-agreement](https://github.com/aicore/contributor-license-agreement) repository. I affirm that the pull request is raised from my Github ID listed against my name in **table-a**.
+ 
+## **Table-A**: Signed by
+
+| Name (“You”) | Github ID | Employer | Country | Date |
+| --- | --- | --- | --- | --- |
+| `Arun Bose` | [abose](https://github.com/abose) | Core.ai Scientific Technologies Private Ltd. |India |12-June-2021|
