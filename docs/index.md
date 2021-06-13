@@ -1,37 +1,21 @@
-## Welcome to GitHub Pages
+# Contributor License Agreement(CLA)
+This repository contains public records of everyone who can contribute and make code changes to any open source projects at core.ai open research. We guarantee that no one apart from the listed contributors in this repo can make any code changes that end up in our customer's hands.
 
-You can use the [editor on GitHub](https://github.com/aicore/contributor-license-agreement/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+# How do I sign the CLA?
+Thank you for contributing  to our community. We welcome you to sign the contributor license agreement. The CLA can be signed in **either** personal capacity or on behalf of your employer. Please choose an appropriate agreement to sign(you can only sign one).
+## How to sign the CLA in personal capacity
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Please follow these steps if you are contributing on your own personal capacity and not making Submissions in the course of work for your employer.
 
-### Markdown
+1. Read the licence [personal_contributor_licence_agreement.md](https://github.com/aicore/contributor-license-agreement/blob/main/personal_contributor_licence_agreement.md)
+2. If you Agree with the terms and conditions, raise a pull request by adding your details to the end of the above file. Click this link to edit the file in github:  [personal_contributor_licence_agreement.md file](https://github.com/aicore/contributor-license-agreement/edit/main/personal_contributor_licence_agreement.md). 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## How to sign the CLA on behalf of your employer
 
-```markdown
-Syntax highlighted code block
+Please follow these steps if you are making Submissions in the course of work for your employer (or your employer has intellectual property rights in my Submissions by contract or applicable law)
 
-# Header 1
-## Header 2
-### Header 3
+1. Read the licence [employer_contributor_license_agreement.md](https://github.com/aicore/contributor-license-agreement/blob/main/employer_contributor_license_agreement.md)
+2. If you Agree with the terms and conditions, raise a pull request by adding your details to the end of file. Click this link to edit the file in github: [employer_contributor_license_agreement.md](https://github.com/aicore/contributor-license-agreement/edit/main/employer_contributor_license_agreement.md). 
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/aicore/contributor-license-agreement/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+# How do i revoke my CLA signature? 
+[Please raise an issue here](https://github.com/aicore/contributor-license-agreement/issues/new) if you would like to revoke your CLA.
