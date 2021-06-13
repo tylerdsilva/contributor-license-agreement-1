@@ -23,6 +23,6 @@ Please raise an issue if you would like to revoke your CLA with the following de
 * Mention GitHub id.
 
 <p align="center">
-<a href="https://github.com/aicore/contributor-license-agreement/edit/main/https://github.com/aicore/contributor-license-agreement/issues/new"><img src="img/revoke_cla_button.svg" /></a>
+<a href="https://github.com/aicore/contributor-license-agreement/issues/new"><img src="img/revoke_cla_button.svg" /></a>
 </p>
 
