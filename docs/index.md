@@ -8,7 +8,10 @@ Thank you for contributing  to our community. We welcome you to sign the contrib
 Please follow these steps if you are contributing on your own personal capacity and not making Submissions in the course of work for your employer.
 
 1. Read the licence [personal_contributor_licence_agreement.md](https://github.com/aicore/contributor-license-agreement/blob/main/personal_contributor_licence_agreement.md)
-2. If you Agree with the terms and conditions, raise a pull request by adding your details to the end of the above file. Click this link to edit the file in github:  [personal_contributor_licence_agreement.md file](https://github.com/aicore/contributor-license-agreement/edit/main/personal_contributor_licence_agreement.md). 
+2. If you Agree with the terms and conditions, raise a pull request adding your name by clicking the below button.
+<p align="center">
+<a href="https://github.com/aicore/contributor-license-agreement/edit/main/employer_contributor_license_agreement.md"><img src="img/button.svg" /></a>
+</p>
 
 ## How to sign the CLA on behalf of your employer
 
