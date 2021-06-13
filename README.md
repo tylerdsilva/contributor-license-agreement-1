@@ -4,5 +4,5 @@ This repository contains public records of everyone who can contribute and make 
 # How do I sign the CLA?
 Thank you for contributing  to our community. We welcome you to sign the contributor license agreement. 
 <p align="center">
-<a href="https://aicore.github.io/contributor-license-agreement/"><img src="docs/img/sign_cla_button.svg" /></a>
+<a href="https://aicore.github.io/contributor-license-agreement/"><img src="docs/img/sign_cla_button.svg" alt="Click here to sign the CLA"/></a>
 </p>
