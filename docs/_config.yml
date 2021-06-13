@@ -1,3 +1,4 @@
 theme: jekyll-theme-cayman
 title: core.ai Contributor License Agreement
 description: Thank you for contributing to our community. We welcome you to sign the contributor license agreement. 
+Include: employer_cla.md, personal_cla.md
