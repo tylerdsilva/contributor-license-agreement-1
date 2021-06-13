@@ -6,7 +6,7 @@ Thank you for contributing  to our community. We welcome you to sign the contrib
 I am contributing on my own personal capacity and not making Submissions in the course of work for my employer.
 
 <p align="center">
-<a href="https://github.com/aicore/contributor-license-agreement/edit/main/personal_contributor_license_agreement.md"><img src="img/personal_cla_button.svg" /></a>
+<a href="https://github.com/aicore/contributor-license-agreement/edit/main/personal_contributor_licence_agreement.md"><img src="img/personal_cla_button.svg" /></a>
 </p>
 
 ## How to sign the CLA on behalf of your employer
