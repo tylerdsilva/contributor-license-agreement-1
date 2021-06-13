@@ -41,7 +41,7 @@ This CLA is effective as of the latest signature date below.
   You represent and warrant that You are legally entitled to grant the above licenses. You represent and warrant that each of Your Submissions is entirely Your original work (except as You may have disclosed pursuant to Section 3). You represent and warrant that You have secured permission from Your employer to make the Submission in cases where Your Submission is made in the course of Your work for Your employer, or Your employer has intellectual property rights in Your Submission by contract or applicable law. Suppose You are signing this CLA on behalf of Your employer. In that case, You represent and warrant that You have the necessary authority to bind the listed employer to the obligations contained in this CLA. You are not expected to provide support for Your Submission unless You choose to do so. UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, AND EXCEPT FOR THE WARRANTIES EXPRESSLY STATED IN SECTIONS 3 AND 6, THE SUBMISSION PROVIDED UNDER THIS CLA IS PROVIDED WITHOUT WARRANTY OF ANY KIND, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY OF NONINFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
 ### 9.**NOTICE**. 
  You agree to notify CORE.AI in writing any facts or circumstances of which You later become aware that would make any of Your representations in this CLA inaccurate in any respect.
-### 10. INFORMATION ABOUT SUBMISSIONS. 
+### 10. **INFORMATION ABOUT SUBMISSIONS**. 
  You agree that contributions to Projects and information about contributions may be maintained indefinitely and disclosed publicly, including Your name and other information you provide with Your Submission.
     with Your Submission.
 ### 11. **GOVERNING LAW/JURISDICTION**. 
