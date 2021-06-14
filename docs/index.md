@@ -9,7 +9,7 @@ I am contributing on my own personal capacity and not making Submissions in the 
 <a href="personal_cla"><img src="img/personal_cla_button.svg" /></a>
 </p>
 
-## How to sign the CLA on behalf of your employer
+## How to sign the CLA on behalf of my employer
 
 I am making Submissions in the course of work for my employer (or my employer has intellectual property rights in my Submissions by contract or applicable law)
 
