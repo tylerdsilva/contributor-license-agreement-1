@@ -58,6 +58,6 @@ I agree with all the terms and conditions above by providing my details in **tab
  
 ## **Table-A**: Signed by
 | Name (“You”) | Github ID | Country| Date |
-| --- | --- | --- | --- |
+| `Tapan Manu`| [TapanManu](https://github.com/TapanManu) | India | 14-June-2021 |
 | `Arun Bose` | [abose](https://github.com/abose) | India |12-June-2021|
 | `Charly P Abraham` | [charlypa](https://github.com/charlypa) | India |13-June-2021|
