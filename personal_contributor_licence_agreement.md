@@ -57,7 +57,8 @@ This CLA is effective as of the latest signature date below.
 I agree with all the terms and conditions above by providing my details in **table-A** and submitting a pull request to the [contributor-license-agreement](https://github.com/aicore/contributor-license-agreement) repository. The agreement is effective as on the date provided against my name in **table-a** as soon as the pull request is raised against [contributor-license-agreement](https://github.com/aicore/contributor-license-agreement) repository. I affirm that the pull request is raised from my Github ID listed against my name in **table-a**.
  
 ## **Table-A**: Signed by
-| Name (“You”) | Github ID | Country| Date |
-| `Tapan Manu`| [TapanManu](https://github.com/TapanManu) | India | 14-June-2021 |
-| `Arun Bose` | [abose](https://github.com/abose) | India |12-June-2021|
-| `Charly P Abraham` | [charlypa](https://github.com/charlypa) | India |13-June-2021|
+| Name (“You”) | Github ID | Date |
+| --- | --- | --- | --- |
+| `Tapan Manu`| [TapanManu](https://github.com/TapanManu) | 14-June-2021 |
+| `Arun Bose` | [abose](https://github.com/abose) |12-June-2021|
+| `Charly P Abraham` | [charlypa](https://github.com/charlypa) |13-June-2021|
