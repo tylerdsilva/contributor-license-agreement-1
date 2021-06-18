@@ -19,7 +19,7 @@ This CLA is effective as of the latest signature date below.
   C. "**Code**" means the computer software code, whether, in human-readable or machine-executable form, that is delivered by You to CORE.AI under this CLA.
        
   D. "**Project**" means any of the projects owned or managed by CORE.AI and offered under a license approved by the
-       [Open Source Initiative](https://www.opensource.org).
+       [Open Source Initiative](https://opensource.org/licenses/category).
        
 ###  2. **YOUR SUBMISSION**. 
   You must agree to the terms of this CLA before making a Submission to any Project. This CLA covers any and all Submissions that You, now or in the future (except as described in Section 4 below), Submit to any Project.
