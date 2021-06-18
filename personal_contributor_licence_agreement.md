@@ -59,6 +59,7 @@ I agree with all the terms and conditions above by providing my details in **tab
 ## **Table-A**: Signed by
 | Name (“You”) | Github ID | Date |
 | --- | --- | --- |
+| `Sreejith A` | [sreejith19](https://github.com/sreejith19) | 18-June-2021 |
 | `Sujith V I` | [VI-Suji](https://github.com/VI-Suji) | 18-June-2021 |
 | `Tapan Manu`| [TapanManu](https://github.com/TapanManu) | 14-June-2021 |
 | `Arun Bose` | [abose](https://github.com/abose) |12-June-2021|
