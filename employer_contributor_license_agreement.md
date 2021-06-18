@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to Projects made available by CORE.AI SCIENTIFIC TECHNOLOGIES PRIVATE LIMITED ("CORE.AI"). In order to clarify the intellectual property license granted with Contributions from any person or entity, CORE.AI must have a Contributor License Agreement (CLA) on file that has been signed by each Contributor, indicating Agreement to the license terms below. This license is for your protection as a Contributor and the safety of CORE.AI and its users; it does not change your rights to use your own Contributions for any other purpose.
 
-This Agreement version allows an entity to submit Contributions to CORE.AI, authorize Contributions submitted by its designated employees to the COER.AI, and grant copyright and patent licenses.
+This Agreement version allows an entity to submit Contributions to CORE.AI, authorize Contributions submitted by its designated employees to CORE.AI, and grant copyright and patent licenses.
 
 Please read this document carefully before signing and keep a copy for your records.
 
