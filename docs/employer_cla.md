@@ -35,20 +35,25 @@ This CLA is effective as of the latest signature date below.
     
 ###  6. **GRANT OF PATENT LICENSE**. 
   Subject to the terms and conditions of this Agreement, You hereby grant to CORE.AI and, and those who receive the Submission directly or indirectly from CORE.AI a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by You that are necessarily infringed by Your Contribution(s) alone or by combination of Your Contribution(s) with the Work to which such Contribution(s) were submitted. Suppose any entity institutes patent litigation against You or any other entity (including a cross-claim or counterclaim in a lawsuit) alleging that your Contribution, or the Work to which you have contributed, constitutes direct or contributory patent infringement. In that case, any patent licenses granted to that entity under this Agreement for that Contribution or Work shall terminate as of the date such litigation is filed.
-###  7. **OTHER RIGHTS RESERVED**. 
+
+###  7. **GRANT OF AUTHOR RIGHTS**.
+  Subject to the terms and conditions of this Agreement, You hereby grant to CORE.AI full author rights prescribed under the terms of [all versions of GNU/GPL, AGPL, LGPL , FDL licence](https://www.gnu.org/licenses/) and appropriate licenses approved by the
+       [Open Source Initiative](https://opensource.org/licenses/category). This does not take away your status as an author and you retain full author rights for your contributions independently of rights granted to CORE.AI.
+
+###  8. **OTHER RIGHTS RESERVED**. 
   Each party reserves all rights not expressly granted in this CLA. No additional licenses or rights whatsoever (including, without limitation, any implied licenses) are granted by implication, exhaustion, estoppel or otherwise.
-###  8. **REPRESENTATIONS AND WARRANTIES**. 
+###  9. **REPRESENTATIONS AND WARRANTIES**. 
   You represent and warrant that You are legally entitled to grant the above licenses. You represent and warrant that each of Your Submissions is entirely Your original work (except as You may have disclosed pursuant to Section 3). You represent and warrant that You have secured permission from Your employer to make the Submission in cases where Your Submission is made in the course of Your work for Your employer, or Your employer has intellectual property rights in Your Submission by contract or applicable law. Suppose You are signing this CLA on behalf of Your employer. In that case, You represent and warrant that You have the necessary authority to bind the listed employer to the obligations contained in this CLA. You are not expected to provide support for Your Submission unless You choose to do so. UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, AND EXCEPT FOR THE WARRANTIES EXPRESSLY STATED IN SECTIONS 3 AND 6, THE SUBMISSION PROVIDED UNDER THIS CLA IS PROVIDED WITHOUT WARRANTY OF ANY KIND, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY OF NONINFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
-### 9.**NOTICE**. 
+### 10.**NOTICE**. 
  You agree to notify CORE.AI in writing any facts or circumstances of which You later become aware that would make any of Your representations in this CLA inaccurate in any respect.
-### 10. **INFORMATION ABOUT SUBMISSIONS**. 
+### 11. **INFORMATION ABOUT SUBMISSIONS**. 
  You agree that contributions to Projects and information about contributions may be maintained indefinitely and disclosed publicly, including Your name and other information you provide with Your Submission.
     with Your Submission.
-### 11. **GOVERNING LAW/JURISDICTION**. 
+### 12. **GOVERNING LAW/JURISDICTION**. 
    This CLA is governed by the law of India and the party's consent to exclusive jurisdiction and venue of the courts of competent jurisdiction in Kochi, Kerala.
-### 12. **ENTIRE AGREEMENT/ASSIGNMENT**. 
+### 13. **ENTIRE AGREEMENT/ASSIGNMENT**. 
    This Agreement constitutes the entire Agreement between parties regarding the subject matter hereof and supersedes all prior understandings or agreements, whether oral or written. This Agreement may be modified only by a written instrument signed by the parties hereto.
-### 13. **HEADINGS FOR CONVENIENCE ONLY**. 
+### 14. **HEADINGS FOR CONVENIENCE ONLY**. 
    Headings of parts and sub-parts under this Agreement are for convenience and organization only. Headings shall not affect the meaning of any provisions of this Agreement.
  
 **I am making Submissions in the course of work for my employer (or my employer has intellectual property rights in my Submissions by contract or applicable law). I have permission from my employer to make Submissions and enter into this CLA on behalf of my employer. By signing below, the defined term "You" includes me and my employer.**
