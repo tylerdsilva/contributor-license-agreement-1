@@ -93,6 +93,12 @@ def collect_pr_details():
     }
 
 
+def write_comment(comment):
+    f = open("./.tmp/comment", "w")
+    f.write(comment)
+    f.close()
+
+
 def validate_is_pull_request(pr_details):
     github_details = pr_details['github']
     if github_details["event_name"] != "pull_request" :
@@ -100,17 +106,20 @@ def validate_is_pull_request(pr_details):
         sys.exit(1)
 
 
-def write_comment(comment):
-    f = open("./.tmp/comment", "w")
-    f.write(comment)
-    f.close()
+def validate_has_only_a_single_commit(pr_details):
+    num_commits = pr_details['num_commits_in_pr']
+    if num_commits != 1 :
+        message = 'The pull request should have only a single commit. Please squash all your commits and update this pull request.'
+        print(message)
+        write_comment(message)
+        sys.exit(1)
 
 
 def review_pr():
     print('Reviewing PR')
     pr_details = collect_pr_details()
     validate_is_pull_request(pr_details)
-    write_comment("Hello from pull request")
-    
+    validate_has_only_a_single_commit(pr_details)
+
 
 review_pr()
