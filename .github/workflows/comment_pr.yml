@@ -34,6 +34,7 @@ jobs:
                repo: context.repo.repo,
                run_id: ${{github.event.workflow_run.id }},
             });
+            console.log(artifacts);
             var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
               return artifact.name == "prcontext"
             })[0];
@@ -45,7 +46,9 @@ jobs:
             });
             var fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
-      - run: unzip pr.zip
+      - run: |
+          ls
+          unzip pr.zip
       
       - name: 'Comment on Current Pull Request'
         uses: actions/github-script@v3
