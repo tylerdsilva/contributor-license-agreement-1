@@ -11,5 +11,3 @@ assignees: ''
 
 * Pull request number of the PR raised revoking your signature.
 * Optional reason for revoke.
-
-test
