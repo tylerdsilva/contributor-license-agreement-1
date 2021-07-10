@@ -99,6 +99,14 @@ def write_comment(comment):
     f.close()
 
 
+def task_failed(comment):
+    f = open("./.tmp/failed", "w")
+    f.write(comment)
+    f.close()
+    write_comment(comment)
+    sys.exit(0)
+
+
 def validate_is_pull_request(pr_details):
     github_details = pr_details['github']
     if github_details["event_name"] != "pull_request" :
@@ -111,8 +119,7 @@ def validate_has_only_a_single_commit(pr_details):
     if num_commits != 1 :
         message = 'Error: The pull request should have only a single commit. Please squash all your commits and update this pull request.'
         print(message)
-        write_comment(message)
-        sys.exit(1)
+        task_failed(message)
     print('Pass: Pull request has only a single commit.')
 
 
@@ -121,8 +128,7 @@ def validate_has_only_a_single_file_change(pr_details):
     if len(files_updated) != 1 :
         message = 'Error: The pull request should have exactly one file change signing the CLA.'
         print(message)
-        write_comment(message)
-        sys.exit(1)
+        task_failed(message)
     print('Pass: Pull request has only a single file change.')
 
 
