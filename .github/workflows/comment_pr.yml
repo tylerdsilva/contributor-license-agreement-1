@@ -1,4 +1,4 @@
-name: Comment on pull request post procesing
+name: Comment on pull request post pull request auto review
 # depends on and only executes after pull_request_processor.yml is complete
 
 on: 
