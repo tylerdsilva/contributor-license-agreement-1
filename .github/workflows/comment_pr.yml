@@ -1,4 +1,4 @@
-name: Comment on pull request post procesing
+name: Comment on pull request post pull request auto review
 # depends on and only executes after pull_request_processor.yml is complete
 
 on: 
@@ -58,7 +58,7 @@ jobs:
           script: |
             var fs = require('fs');
             var issue_number = Number(fs.readFileSync('./PRNumber'));
-            var comment = fs.readFileSync('./comment');
+            var comment = String(fs.readFileSync('./comment'));
             await github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
