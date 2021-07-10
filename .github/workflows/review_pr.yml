@@ -66,4 +66,5 @@ jobs:
           if test -f "$FILE"; then
               echo "Validation failed. Reason:"
               cat ./.tmp/failed
+              exit 1
           fi
