@@ -49,6 +49,7 @@ jobs:
       - run: |
           ls
           unzip pr.zip
+          cat ./comment
       
       - name: 'Comment on Current Pull Request'
         uses: actions/github-script@v3
