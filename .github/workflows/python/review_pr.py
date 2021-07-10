@@ -109,11 +109,21 @@ def validate_is_pull_request(pr_details):
 def validate_has_only_a_single_commit(pr_details):
     num_commits = pr_details['num_commits_in_pr']
     if num_commits != 1 :
-        message = 'The pull request should have only a single commit. Please squash all your commits and update this pull request.'
+        message = 'Error: The pull request should have only a single commit. Please squash all your commits and update this pull request.'
         print(message)
         write_comment(message)
         sys.exit(1)
     print('Pass: Pull request has only a single commit.')
+
+
+def validate_has_only_a_single_file_change(pr_details):
+    files_updated = pr_details['files_updated']
+    if len(files_updated) != 1 :
+        message = 'Error: The pull request should have exactly one file change signing the CLA.'
+        print(message)
+        write_comment(message)
+        sys.exit(1)
+    print('Pass: Pull request has only a single file change.')
 
 
 def review_pr():
