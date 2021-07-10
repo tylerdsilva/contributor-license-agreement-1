@@ -17,6 +17,14 @@ jobs:
       ${{ github.event.workflow_run.event == 'pull_request' &&
       github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Print github contexts
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: |
+          ls
+          echo "GH context:"
+          echo "$GITHUB_CONTEXT"
+
       - name: 'Download artifact'
         uses: actions/github-script@v3.1.0
         with:
@@ -38,14 +46,6 @@ jobs:
             var fs = require('fs');
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
-
-      - name: Print github contexts
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: |
-          ls
-          echo "GH context:"
-          echo "$GITHUB_CONTEXT"
       
       - name: 'Comment on Current Pull Request'
         uses: actions/github-script@v3
