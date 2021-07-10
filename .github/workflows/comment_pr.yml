@@ -3,7 +3,7 @@ name: Comment on pull request post procesing
 
 on: 
   workflow_run:
-    workflows: ["Pull Request Processor"]
+    workflows: ["Reviewing Pull Request"]
     types:
       - completed
 
