@@ -92,9 +92,18 @@ def collect_pr_details():
         'files_updated': pr_changes['files_updated']
     }
 
+
+def validate_is_pull_request(pr_details):
+    github_details = pr_details['github']
+    if github_details["event_name"] != "pull_request" :
+        print("Error! This operation is valid on github pull requests. Exiting. Event received: ", github_details["event_name"])
+        sys.exit(1)
+
+
 def review_pr():
     print('Reviewing PR')
-    pr = collect_pr_details()
+    pr_details = collect_pr_details()
+    validate_is_pull_request(pr_details)
     
 
 review_pr()
