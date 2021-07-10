@@ -85,17 +85,16 @@ def collect_pr_details():
         'pr_submitter_github_login': github['event']['pull_request']['user']['login'],
         'github_repo': github['repository'],
         'pr_number' : github['event']['number'],
-        'is_git_dir': git_local.is_git_dir,
-        'last_10_commit_list': git_local.last_10_commit_list,
-        'commit_id_list': pr_changes.commit_id_list,
-        'commit_logins': pr_changes.commit_logins,
-        'files_updated': pr_changes.files_updated
+        'is_git_dir': git_local['is_git_dir'],
+        'last_10_commit_list': git_local['last_10_commit_list'],
+        'commit_id_list': pr_changes['commit_id_list'],
+        'commit_logins': pr_changes['commit_logins'],
+        'files_updated': pr_changes['files_updated']
     }
 
 def review_pr():
     print('Reviewing PR')
     pr = collect_pr_details()
-    print(pr)
-
+    
 
 review_pr()
