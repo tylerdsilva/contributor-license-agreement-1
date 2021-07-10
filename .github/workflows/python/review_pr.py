@@ -113,6 +113,7 @@ def validate_has_only_a_single_commit(pr_details):
         print(message)
         write_comment(message)
         sys.exit(1)
+    print('Pass: Pull request has only a single commit.')
 
 
 def review_pr():
