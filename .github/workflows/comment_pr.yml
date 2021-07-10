@@ -3,7 +3,7 @@ name: Comment on pull request post procesing
 
 on: 
   workflow_run:
-    workflows: ["Pull Request Processor"]
+    workflows: ["Reviewing Pull Request"]
     types:
       - completed
 
@@ -50,7 +50,7 @@ jobs:
       - name: 'Comment on Current Pull Request'
         uses: actions/github-script@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.COREAI_GITHUB_TOKEN }}
           script: |
             var fs = require('fs');
             var issue_number = Number(fs.readFileSync('./PRNumber'));
