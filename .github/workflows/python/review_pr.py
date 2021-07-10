@@ -131,6 +131,7 @@ def review_pr():
     pr_details = collect_pr_details()
     validate_is_pull_request(pr_details)
     validate_has_only_a_single_commit(pr_details)
+    write_comment('Thank you for signing the contributor license agreement with core.ai. Welcome to our community :)')
 
 
 review_pr()
