@@ -1,4 +1,4 @@
-name: Pull Request Processor
+name: Reviewing Pull Request
 # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
 # The pull request target event provides RW token to github 
 # https://github.blog/2020-08-03-github-actions-improvements-for-fork-and-pull-request-workflows/
@@ -60,3 +60,11 @@ jobs:
           name: prcontext
           path: .tmp/
       
+      - name: Fail on validation errors
+        run: |
+          FILE=./.tmp/failed
+          if test -f "$FILE"; then
+              echo "Validation failed. Reason:"
+              cat ./.tmp/failed
+              exit 1
+          fi
