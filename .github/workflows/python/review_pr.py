@@ -100,10 +100,17 @@ def validate_is_pull_request(pr_details):
         sys.exit(1)
 
 
+def write_comment(comment):
+    f = open("./.tmp/comment", "w")
+    f.write(comment)
+    f.close()
+
+
 def review_pr():
     print('Reviewing PR')
     pr_details = collect_pr_details()
     validate_is_pull_request(pr_details)
+    write_comment("Hello from pull request")
     
 
 review_pr()
