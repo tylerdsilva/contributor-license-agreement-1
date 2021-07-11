@@ -1,9 +1,12 @@
 import os
 import sys
+import requests
 import json
 import subprocess
+from diff_parser import get_diff_details
 
 print("current working directory is: ", os.getcwd())
+STATUS_FAILED = 'FAILED'
 
 
 def get_github_details():
@@ -94,17 +97,20 @@ def collect_pr_details():
 
 
 def write_comment(comment):
-    f = open("./.tmp/comment", "w")
+    print(comment)
+    f = open("./.tmp/comment", "a")
     f.write(comment)
+    f.write("\n")
     f.close()
 
 
 def task_failed(comment):
-    f = open("./.tmp/failed", "w")
+    f = open("./.tmp/failed", "a")
     f.write(comment)
+    f.write("\n")
     f.close()
     write_comment(comment)
-    sys.exit(0)
+    return STATUS_FAILED
 
 
 def validate_is_pull_request(pr_details):
@@ -117,27 +123,59 @@ def validate_is_pull_request(pr_details):
 def validate_has_only_a_single_commit(pr_details):
     num_commits = pr_details['num_commits_in_pr']
     if num_commits != 1 :
-        message = 'Error: The pull request should have only a single commit. Please squash all your commits and update this pull request.'
-        print(message)
-        task_failed(message)
+        message = '''Error: The pull request should have only a single commit. 
+        Please squash all your commits and update this pull request.
+        more help: https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git
+        '''
+        return task_failed(message)
     print('Pass: Pull request has only a single commit.')
 
 
 def validate_has_only_a_single_file_change(pr_details):
     files_updated = pr_details['files_updated']
     if len(files_updated) != 1 :
-        message = 'Error: The pull request should have exactly one file change signing the CLA.'
-        print(message)
-        task_failed(message)
+        message = 'Error: The pull request should have exactly one file change signing the CLA. But found the following files changed:\n ' + str(files_updated)
+        return task_failed(message)
     print('Pass: Pull request has only a single file change.')
 
+
+def getChanges(patch_details):
+    diff_details = get_diff_details(patch_details)
+    line_added = None
+    if len(diff_details['linesAdded']) == 1:
+        line_added = diff_details['linesAdded'][0]
+    return {
+        'linesRemoved' : len(diff_details['linesRemoved']),
+        'linesAdded': len(diff_details['linesAdded']),
+        'textAdded': line_added
+    }
+
+def validate_patch(pr_details):
+    github = pr_details['github']
+    diffURL = github['event']['pull_request']['diff_url']
+    print(diffURL)
+    response = requests.get(diffURL)
+    if response.status_code != 200:
+        task_failed('Could not get pull request details')
+        sys.exit(1)
+    changes = getChanges(response.text)
+    if changes['linesRemoved'] !=0:
+        return task_failed('Error: Some lines were removed. Please re-submit PR containing exactly one change adding your name to the CLA.')
+    if changes['linesAdded'] !=1:
+        return task_failed('Error: More than 1 line was added. Please re-submit PR containing exactly one change adding your name to the CLA.')
+    print(changes['textAdded'])
 
 def review_pr():
     print('Reviewing PR')
     pr_details = collect_pr_details()
     validate_is_pull_request(pr_details)
-    validate_has_only_a_single_commit(pr_details)
-    validate_has_only_a_single_file_change(pr_details)
+    COMMIT_VALIDATION = validate_has_only_a_single_commit(pr_details)
+    FILE_VALIDATION = validate_has_only_a_single_file_change(pr_details)
+    PATCH_VALIDATION = validate_patch(pr_details)
+    if COMMIT_VALIDATION == STATUS_FAILED or FILE_VALIDATION == STATUS_FAILED or PATCH_VALIDATION == STATUS_FAILED:
+        print('Validations failed. Exiting!')
+        return
+    
     write_comment('Thank you for signing the contributor license agreement with core.ai. Welcome to our community :)')
 
 

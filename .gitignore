@@ -12,6 +12,7 @@
 *.cb2
 .*.lb
 .tmp
+*__pycache__*
 
 ## Intermediate documents:
 *.dvi
