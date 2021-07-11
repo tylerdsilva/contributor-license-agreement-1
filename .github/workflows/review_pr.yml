@@ -28,10 +28,10 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-        run: pip3 install requests
-      - name: Setting temp directory
+      - name: Setting up prerequisites
         run: | 
           mkdir ./.tmp
+          pip3 install requests
       - name: Getting commit details
         uses: wei/wget@v1
         with:
