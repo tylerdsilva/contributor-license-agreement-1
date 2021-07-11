@@ -123,7 +123,7 @@ def validate_is_pull_request(pr_details):
 def validate_has_only_a_single_commit(pr_details):
     num_commits = pr_details['num_commits_in_pr']
     if num_commits != 1 :
-        message = '''Error: The pull request should have only a single commit. 
+        message = '''## Error: The pull request should have only a single commit. 
         Please squash all your commits and update this pull request.
         more help: https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git
         '''
@@ -134,7 +134,9 @@ def validate_has_only_a_single_commit(pr_details):
 def validate_has_only_a_single_file_change(pr_details):
     files_updated = pr_details['files_updated']
     if len(files_updated) != 1 :
-        message = 'Error: The pull request should have exactly one file change signing the CLA. But found the following files changed:\n ' + str(files_updated)
+        message = '## Error: The pull request should have exactly one file change signing the CLA. \nBut found the following files changed: '
+        for file in files_updated:
+            message += '\n   * ' + file
         return task_failed(message)
     print('Pass: Pull request has only a single file change.')
 
@@ -160,9 +162,9 @@ def validate_patch(pr_details):
         sys.exit(1)
     changes = getChanges(response.text)
     if changes['linesRemoved'] !=0:
-        return task_failed('Error: Some lines were removed. Please re-submit PR containing exactly one change adding your name to the CLA.')
+        return task_failed('## Error: Some lines were removed. \n    Please re-submit PR containing exactly one change adding your name to the CLA.\n')
     if changes['linesAdded'] !=1:
-        return task_failed('Error: More than 1 line was added. Please re-submit PR containing exactly one change adding your name to the CLA.')
+        return task_failed('## Error: More than 1 line was added. \n   Please re-submit PR containing exactly one change adding your name to the CLA.\n')
     print(changes['textAdded'])
 
 def review_pr():
@@ -176,7 +178,12 @@ def review_pr():
         print('Validations failed. Exiting!')
         return
     
-    write_comment('Thank you for signing the contributor license agreement with core.ai. Welcome to our community :)')
+    write_comment( '\n## Welcome \nHello ' + pr_details['pr_submitter_github_login'] + ', \n'\
+    + '''
+    Thank you for being a part of our community and helping build free software for the future. On behalf of everyone at core.ai open research, we extend a warm welcome to our community.
+
+    If you have not done so already, please [join our discord group](https://discord.gg/GaBDAK7BRM) to interact with our community members. 
+    ''')
 
 
 review_pr()
