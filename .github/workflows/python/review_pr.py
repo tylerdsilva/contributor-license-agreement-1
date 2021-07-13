@@ -179,11 +179,10 @@ def review_pr():
         return
     
     write_comment( '\n## Welcome \nHello ' + pr_details['pr_submitter_github_login'] + ', \n'\
-    + '''
-    Thank you for being a part of our community and helping build free software for the future. On behalf of everyone at core.ai open research, we extend a warm welcome to our community.
-
-    If you have not done so already, please [join our discord group](https://discord.gg/GaBDAK7BRM) to interact with our community members. 
-    ''')
+                  + 'Thank you for being a part of our community and helping build free software for the future. '\
+                  + 'On behalf of everyone at core.ai open research, we extend a warm welcome to our community. \n'\
+                  + 'If you have not done so already, please [join our discord group](https://discord.gg/GaBDAK7BRM) to interact with our community members. \n'
+    )
 
 
 review_pr()
