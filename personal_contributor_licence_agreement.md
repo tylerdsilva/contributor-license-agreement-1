@@ -69,4 +69,4 @@ I agree with all the terms and conditions above by providing my details in **tab
 | `Arun Bose` | [abose](https://github.com/abose) |12-June-2021|
 | `Charly P Abraham` | [charlypa](https://github.com/charlypa) |13-June-2021|
 | `Atheena Renjith` | [7tena](https://github.com/7tena) | 18-June-2021 |
-| 'Naren Hrithik J'| [Njay2000](https://github.com/Njay2000) |12-july-2021|
+| `Naren Hrithik J`| [Njay2000](https://github.com/Njay2000) |12-july-2021|
