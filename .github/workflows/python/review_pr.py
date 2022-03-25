@@ -238,7 +238,7 @@ def review_pr():
     )
 
 
-# review_pr()
+review_pr()
 
 # Invalid row fomatting
 # EXPECTED_ERROR_MESSAGE = STATUS_FAILED
