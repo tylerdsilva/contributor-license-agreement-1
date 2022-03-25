@@ -8,6 +8,7 @@ from diff_parser import get_diff_details
 
 print("current working directory is: ", os.getcwd())
 STATUS_FAILED = 'FAILED'
+SUCCESS_MESSAGE = 'ok'
 
 
 def get_github_details():
@@ -159,21 +160,43 @@ def validate_row_formatting(line):
     format_re = "\+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
     # Regular expression for checking extra spaces at the begining of the line
     extra_spaces_re = "\+\s+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
+    # Regular expression for checking single qoutes instead of back ticks
+    single_qoutes_re = "\+\|\s*'[A-Za-z]+(\s[A-Za-z]+)*'\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
     if re.match(format_re, line):
         print('Pass: Added line is of the specified format')
     elif re.match(extra_spaces_re, line):
+        print(line)
         return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n' + 'Please remove extra spaces in the start of the line.')
+    elif re.match(single_qoutes_re, line):
+        return task_failed("Error: The expected line should be: | `full name` | [naren](https://github.com/naren) | 14-july-2021 | \n" + "please use `full name` instead of 'full name'")
     else:
         return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n')
 
 
+def validate_githubid(pr_raiser_login, change):
+    git_username1_re = "\[(.*)\]" # Git username provided in square brackets
+    git_username2_re = '\(https:\/\/github.com\/(.*)\)' # Git username provided as a part of git profile url
+
+    username1 = re.findall(git_username1_re, change)[0]
+    username2 = re.findall(git_username2_re, change)[0]
+
+    if pr_raiser_login != username1 or pr_raiser_login != username2:
+        return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n'\
+                            + 'Github username should be same as pull request user name'
+                        )
+    return SUCCESS_MESSAGE
+ 
+
 # Change line is of the format "+| `full name`| [pr_raiser_login](https://github.com/pr_raiser_login) |12-july-2021|"
 def validate_change(pr_raiser_login, change):
     ROW_FORMATTING_VALIDATION = validate_row_formatting(change)
+    GITHUBID_VALIDATION = validate_githubid(pr_raiser_login, change)
 
-    if ROW_FORMATTING_VALIDATION == STATUS_FAILED:
+    if ROW_FORMATTING_VALIDATION == STATUS_FAILED or GITHUBID_VALIDATION == STATUS_FAILED:
         print('Line format validations failed. Exiting!')
         return STATUS_FAILED
+    
+    return SUCCESS_MESSAGE
 
 
 def validate_patch(pr_details):
