@@ -276,3 +276,6 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# Temporary files for testing locally
+.tmp
