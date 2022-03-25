@@ -3,6 +3,7 @@ import sys
 import requests
 import json
 import subprocess
+import re
 from diff_parser import get_diff_details
 
 print("current working directory is: ", os.getcwd())
@@ -15,7 +16,7 @@ def get_github_details():
 
 
 def get_commit_details():
-    commit_info_file = open('./.tmp/commitDetails.json', 'r') 
+    commit_info_file = open('./.tmp/commitDetails.json', 'r')
     return json.load(commit_info_file)
 
 
@@ -152,6 +153,29 @@ def getChanges(patch_details):
         'textAdded': line_added
     }
 
+
+def validate_row_formatting(line):
+    # Regular expression for validating the line format
+    format_re = "\+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
+    # Regular expression for checking extra spaces at the begining of the line
+    extra_spaces_re = "\+\s+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
+    if re.match(format_re, line):
+        print('Pass: Added line is of the specified format')
+    elif re.match(extra_spaces_re, line):
+        return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n' + 'Please remove extra spaces in the start of the line.')
+    else:
+        return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n')
+
+
+# Change line is of the format "+| `full name`| [pr_raiser_login](https://github.com/pr_raiser_login) |12-july-2021|"
+def validate_change(pr_raiser_login, change):
+    ROW_FORMATTING_VALIDATION = validate_row_formatting(change)
+
+    if ROW_FORMATTING_VALIDATION == STATUS_FAILED:
+        print('Line format validations failed. Exiting!')
+        return STATUS_FAILED
+
+
 def validate_patch(pr_details):
     github = pr_details['github']
     diffURL = github['event']['pull_request']['diff_url']
@@ -166,6 +190,9 @@ def validate_patch(pr_details):
     if changes['linesAdded'] !=1:
         return task_failed('## Error: More than 1 line was added. \n   Please re-submit PR containing exactly one change adding your name to the CLA.\n')
     print(changes['textAdded'])
+
+    CHANGE_VALIDATION = validate_change(pr_details['pr_submitter_github_login'], changes['textAdded'])
+    return CHANGE_VALIDATION
 
 def review_pr():
     print('Reviewing PR')
