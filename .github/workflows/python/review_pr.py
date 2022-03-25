@@ -190,12 +190,15 @@ def validate_githubid(pr_raiser_login, change):
 # Change line is of the format "+| `full name`| [pr_raiser_login](https://github.com/pr_raiser_login) |12-july-2021|"
 def validate_change(pr_raiser_login, change):
     ROW_FORMATTING_VALIDATION = validate_row_formatting(change)
-    GITHUBID_VALIDATION = validate_githubid(pr_raiser_login, change)
-
-    if ROW_FORMATTING_VALIDATION == STATUS_FAILED or GITHUBID_VALIDATION == STATUS_FAILED:
+    if ROW_FORMATTING_VALIDATION == STATUS_FAILED:
         print('Line format validations failed. Exiting!')
         return STATUS_FAILED
     
+    GITHUBID_VALIDATION = validate_githubid(pr_raiser_login, change)
+    if GITHUBID_VALIDATION == STATUS_FAILED:
+        print('Git username validation failed!')
+        return STATUS_FAILED
+
     return SUCCESS_MESSAGE
 
 
@@ -235,4 +238,25 @@ def review_pr():
     )
 
 
-review_pr()
+# review_pr()
+
+# Invalid row fomatting
+# EXPECTED_ERROR_MESSAGE = STATUS_FAILED
+# assert validate_change('naren', "+ `full name`| [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', "lols") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', "+| `full name` [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', "+ `full name`| [nare") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', "+       | `full name`|   [naren](https://github.com/naren)  |14-july-2021  |   ") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('psdhanesh7', "+| Dhanesh P S| [psdhanesh7](http://github.com/psdhanesh7)| 25-March-2022 |")
+
+# # success case
+# EXPECTED_SUCCESS_MESSAGE = "ok"
+# assert validate_change('newuser', "+| `full name user` | [newuser](https://github.com/newuser) | 14-july-2021 |") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', "+|`full name user`|[newuser](https://github.com/newuser)|14-july-2021|") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', "+|  `full name user`   |    [newuser](https://github.com/newuser)   |  14-july-2021  |") == EXPECTED_SUCCESS_MESSAGE
+
+# # user names should be valid
+# EXPECTED_ERROR_MESSAGE = STATUS_FAILED
+# assert validate_change('naren', "+| `full name`| [some_wrong_user](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', "+| `full name`| [naren](https://github.com/some_wrong_user) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', "+| 'full name'| [naren](https://github.com/some_wrong_user) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
