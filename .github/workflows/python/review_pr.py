@@ -209,11 +209,11 @@ def validate_row_formatting(line):
 def validate_githubid(pr_raiser_login, change):
     USERNAME_ERROR_MESSAGE = 'Username Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n'
 
-    git_username1_re = "\|\s*\[(.*)\]" # Git username provided in square brackets
-    git_username2_re = '\(https:\/\/github.com\/(.*)\)' # Git username provided as a part of git profile url
+    username_in_brackets_re = "\|\s*\[(.*)\]" # Git username provided in square brackets
+    username_in_url_re = '\(https:\/\/github.com\/(.*)\)' # Git username provided as a part of git profile url
 
-    username_in_brackets_match = re.search(git_username1_re, change)
-    username_in_url_match = re.search(git_username2_re, change)
+    username_in_brackets_match = re.search(username_in_brackets_re, change)
+    username_in_url_match = re.search(username_in_url_re, change)
     if username_in_brackets_match == None or username_in_url_match == None:
         return task_failed(USERNAME_ERROR_MESSAGE)
 
@@ -309,7 +309,7 @@ def review_pr():
     )
 
 
-# review_pr()
+review_pr()
 
 # # Invalid row fomatting
 # EXPECTED_ERROR_MESSAGE = STATUS_FAILED
