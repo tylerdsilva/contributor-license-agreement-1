@@ -5,6 +5,7 @@ import json
 import subprocess
 import re
 from diff_parser import get_diff_details
+from datetime import *
 
 print("current working directory is: ", os.getcwd())
 STATUS_FAILED = 'FAILED'
@@ -115,6 +116,37 @@ def task_failed(comment):
     return STATUS_FAILED
 
 
+def get_month_number(month):
+    month = month.lower()
+    if month == 'january':
+        return 1
+    if month == 'february':
+        return 2
+    if month == 'march':
+        return 3
+    if month == 'april':
+        return 4
+    if month == 'may':
+        return 5
+    if month == 'june':
+        return 6
+    if month == 'july':
+        return 7
+    if month == 'august':
+        return 8
+    if month == 'september':
+        return 9
+    if month == 'october':
+        return 10
+    if month == 'november':
+        return 11
+    if month == 'december':
+        return 12
+    
+    return -1
+
+
+
 def validate_is_pull_request(pr_details):
     github_details = pr_details['github']
     if github_details["event_name"] != "pull_request" :
@@ -156,49 +188,88 @@ def getChanges(patch_details):
 
 
 def validate_row_formatting(line):
+    FORMATTING_ERROR = "Line Format Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n"
     # Regular expression for validating the line format
-    format_re = "\+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
+    format_re = "\+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
     # Regular expression for checking extra spaces at the begining of the line
-    extra_spaces_re = "\+\s+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
+    extra_spaces_re = "\+\s+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
     # Regular expression for checking single qoutes instead of back ticks
-    single_qoutes_re = "\+\|\s*'[A-Za-z]+(\s[A-Za-z]+)*'\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z]+-[\d]{4}\s*\|"
+    single_qoutes_re = "\+\|\s*'[A-Za-z]+(\s[A-Za-z]+)*'\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
     if re.match(format_re, line):
         print('Pass: Added line is of the specified format')
     elif re.match(extra_spaces_re, line):
         print(line)
-        return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n' + 'Please remove extra spaces in the start of the line.')
+        return task_failed(FORMATTING_ERROR + 'Please remove extra spaces in the start of the line.')
     elif re.match(single_qoutes_re, line):
-        return task_failed("Error: The expected line should be: | `full name` | [naren](https://github.com/naren) | 14-july-2021 | \n" + "please use `full name` instead of 'full name'")
+        return task_failed(FORMATTING_ERROR + "please use `full name` instead of 'full name'")
     else:
-        return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n')
+        return task_failed(FORMATTING_ERROR)
 
 
 def validate_githubid(pr_raiser_login, change):
-    git_username1_re = "\[(.*)\]" # Git username provided in square brackets
-    git_username2_re = '\(https:\/\/github.com\/(.*)\)' # Git username provided as a part of git profile url
+    USERNAME_ERROR_MESSAGE = 'Username Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n'
 
-    username1 = re.findall(git_username1_re, change)[0]
-    username2 = re.findall(git_username2_re, change)[0]
+    username_in_brackets_re = "\|\s*\[(.*)\]" # Git username provided in square brackets
+    username_in_url_re = '\(https:\/\/github.com\/(.*)\)' # Git username provided as a part of git profile url
 
-    if pr_raiser_login != username1 or pr_raiser_login != username2:
-        return task_failed('Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n'\
-                            + 'Github username should be same as pull request user name'
-                        )
+    username_in_brackets_match = re.search(username_in_brackets_re, change)
+    username_in_url_match = re.search(username_in_url_re, change)
+    if username_in_brackets_match == None or username_in_url_match == None:
+        return task_failed(USERNAME_ERROR_MESSAGE)
+
+    username_in_brackets = username_in_brackets_match.group(1)
+    username_in_url = username_in_url_match.group(1)
+    if pr_raiser_login != username_in_brackets or pr_raiser_login != username_in_url:
+        return task_failed(USERNAME_ERROR_MESSAGE + 'Github username should be same as pull request user name')
+
+    print('Pass: Git username successfully validated')
     return SUCCESS_MESSAGE
- 
+
+
+def validate_date(line):
+    DATE_ERROR_MESSAGE = "Date Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n"\
+                        + "Invalid date: Date should be within one week of <today's date in dd-month-YYYY format>"
+   
+    # regular expression for extracting the date from line
+    date_re = '\|\s*([\d]{2}-[a-zA-Z\d]+-[\d]{4})\s*\|'
+    date_string_match = re.search(date_re, line)
+    if date_string_match == None:
+        return task_failed(DATE_ERROR_MESSAGE)
+    
+    date_string = date_string_match.group(1)
+    print(date_string)
+    dd, month, yyyy = [x for x in date_string.split('-')]
+    dd = int(dd)
+    month = get_month_number(month)
+    yyyy = int(yyyy)
+    if month == -1:
+        print('Month not entered properly')
+        return task_failed(DATE_ERROR_MESSAGE + 'Month not entered properly')
+
+    try:
+        pr_date = date(yyyy, month, dd)
+    except Exception as e:
+        return task_failed(DATE_ERROR_MESSAGE + '\n' + str(e))
+
+    today = date.today()
+    date_diff = (today - pr_date).days
+    if date_diff < 0 or date_diff > 7:
+        print('Given date not within one week')
+        return task_failed(DATE_ERROR_MESSAGE)
+
+    print('Pass: Date is of the specified format and within one week of signing')
+    return SUCCESS_MESSAGE
 
 # Change line is of the format "+| `full name`| [pr_raiser_login](https://github.com/pr_raiser_login) |12-july-2021|"
 def validate_change(pr_raiser_login, change):
     ROW_FORMATTING_VALIDATION = validate_row_formatting(change)
-    if ROW_FORMATTING_VALIDATION == STATUS_FAILED:
-        print('Line format validations failed. Exiting!')
+    GITHUBID_VALIDATION = validate_githubid(pr_raiser_login, change)
+    DATE_VALIDATION = validate_date(change)
+    
+    if ROW_FORMATTING_VALIDATION == STATUS_FAILED or GITHUBID_VALIDATION == STATUS_FAILED or DATE_VALIDATION == STATUS_FAILED:
+        print('Validation failed. Exiting!')
         return STATUS_FAILED
     
-    GITHUBID_VALIDATION = validate_githubid(pr_raiser_login, change)
-    if GITHUBID_VALIDATION == STATUS_FAILED:
-        print('Git username validation failed!')
-        return STATUS_FAILED
-
     return SUCCESS_MESSAGE
 
 
@@ -240,23 +311,28 @@ def review_pr():
 
 review_pr()
 
-# Invalid row fomatting
+# # Invalid row fomatting
 # EXPECTED_ERROR_MESSAGE = STATUS_FAILED
 # assert validate_change('naren', "+ `full name`| [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('naren', "lols") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('naren', "+| `full name` [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('naren', "+ `full name`| [nare") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('naren', "+       | `full name`|   [naren](https://github.com/naren)  |14-july-2021  |   ") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('psdhanesh7', "+| Dhanesh P S| [psdhanesh7](http://github.com/psdhanesh7)| 25-March-2022 |")
+# assert validate_change('psdhanesh7', "+| Dhanesh P S| [psdhanesh7](https://github.com/psdhanesh7)| 25-March-2022 |")
 
 # # success case
 # EXPECTED_SUCCESS_MESSAGE = "ok"
-# assert validate_change('newuser', "+| `full name user` | [newuser](https://github.com/newuser) | 14-july-2021 |") == EXPECTED_SUCCESS_MESSAGE
-# assert validate_change('newuser', "+|`full name user`|[newuser](https://github.com/newuser)|14-july-2021|") == EXPECTED_SUCCESS_MESSAGE
-# assert validate_change('newuser', "+|  `full name user`   |    [newuser](https://github.com/newuser)   |  14-july-2021  |") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', "+| `full name user` | [newuser](https://github.com/newuser) | 25-march-2022 |") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', "+|`full name user`|[newuser](https://github.com/newuser)|26-march-2022|") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', "+|  `full name user`   |    [newuser](https://github.com/newuser)   |  26-march-2022  |") == EXPECTED_SUCCESS_MESSAGE
 
 # # user names should be valid
 # EXPECTED_ERROR_MESSAGE = STATUS_FAILED
-# assert validate_change('naren', "+| `full name`| [some_wrong_user](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
-# assert validate_change('naren', "+| `full name`| [naren](https://github.com/some_wrong_user) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', "+| `full name`| [psdhanesh](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', "+| `full name`| [naren](https://github.com/psdhanesh7) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
 # assert validate_change('naren', "+| 'full name'| [naren](https://github.com/some_wrong_user) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+
+# DATE_ERROR_MESSAGE = STATUS_FAILED
+# assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) |10-March-2022|") == DATE_ERROR_MESSAGE
+# assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) |14-06-2021|") == DATE_ERROR_MESSAGE
+# assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) ||") == DATE_ERROR_MESSAGE
