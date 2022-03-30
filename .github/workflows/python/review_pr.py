@@ -146,6 +146,25 @@ def get_month_number(month):
     return -1
 
 
+def extract_personal_contributer_details():
+	f = open(os.getcwd() + '/personal_contributor_licence_agreement.md')
+	personal_cla_contents = f.read()
+
+	personal_contributers_regex = re.compile('\| *\[([^\s]+)\]\([^\s]+\) *\|')
+	personal_contributers = personal_contributers_regex.findall(personal_cla_contents)
+
+	return personal_contributers
+
+
+def extract_employer_contributer_details():
+	f = open(os.getcwd() + '/employer_contributor_license_agreement.md')
+	employer_cla_contents = f.read()
+
+	employer_contributers_regex = re.compile('\| *\[([^\s]+)\]\([^\s]+\) *\|')
+	employer_contributers = employer_contributers_regex.findall(employer_cla_contents)
+
+	return employer_contributers
+
 
 def validate_is_pull_request(pr_details):
     github_details = pr_details['github']
@@ -237,7 +256,6 @@ def validate_date(line):
         return task_failed(DATE_ERROR_MESSAGE)
     
     date_string = date_string_match.group(1)
-    print(date_string)
     dd, month, yyyy = [x for x in date_string.split('-')]
     dd = int(dd)
     month = get_month_number(month)
@@ -260,13 +278,28 @@ def validate_date(line):
     print('Pass: Date is of the specified format and within one week of signing')
     return SUCCESS_MESSAGE
 
+
+def validate_if_already_signed(pr_raiser_login):
+    personal_contributers = extract_personal_contributer_details()
+    if pr_raiser_login in personal_contributers:
+        return task_failed('Error: ' + pr_raiser_login + ' has already signed the personal contributor license agreement.')
+    
+    employer_contributers = extract_employer_contributer_details()
+    if pr_raiser_login in employer_contributers:
+        return task_failed('Error: ' + pr_raiser_login + 'has already signed the employer contributor license agreement.')
+
+    print('Pass: User has not signed CLA in personal capacity or employer capacity before')
+    return SUCCESS_MESSAGE
+    
+
 # Change line is of the format "+| `full name`| [pr_raiser_login](https://github.com/pr_raiser_login) |12-july-2021|"
 def validate_change(pr_raiser_login, change):
     ROW_FORMATTING_VALIDATION = validate_row_formatting(change)
     GITHUBID_VALIDATION = validate_githubid(pr_raiser_login, change)
     DATE_VALIDATION = validate_date(change)
+    ALREADY_SIGNED_VALIDATION = validate_if_already_signed(pr_raiser_login)
     
-    if ROW_FORMATTING_VALIDATION == STATUS_FAILED or GITHUBID_VALIDATION == STATUS_FAILED or DATE_VALIDATION == STATUS_FAILED:
+    if ROW_FORMATTING_VALIDATION == STATUS_FAILED or GITHUBID_VALIDATION == STATUS_FAILED or DATE_VALIDATION == STATUS_FAILED or ALREADY_SIGNED_VALIDATION == STATUS_FAILED:
         print('Validation failed. Exiting!')
         return STATUS_FAILED
     
@@ -336,3 +369,9 @@ review_pr()
 # assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) |10-March-2022|") == DATE_ERROR_MESSAGE
 # assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) |14-06-2021|") == DATE_ERROR_MESSAGE
 # assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) ||") == DATE_ERROR_MESSAGE
+
+# # check if already signed
+# EXPECTED_ERROR_MESSAGE = STATUS_FAILED
+# assert validate_change('Njay2000', "+| `full name`| [Njay2000](https://github.com/Njay2000) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('mathewdennis1', "+| `full name`| [mathewdennis1](https://github.com/mathewdennis1) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('hello', "+| `full name`| [hello](https://github.com/hello) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
