@@ -206,15 +206,29 @@ def getChanges(patch_details):
     }
 
 
-def validate_row_formatting(line):
-    FORMATTING_ERROR = "Line Format Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n"
-    # Regular expression for validating the line format
-    format_re = "\+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
-    # Regular expression for checking extra spaces at the begining of the line
-    extra_spaces_re = "\+\s+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
-    # Regular expression for checking single qoutes instead of back ticks
-    single_qoutes_re = "\+\|\s*'[A-Za-z]+(\s[A-Za-z]+)*'\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
-    if re.match(format_re, line):
+def validate_row_formatting(files_updated, line):
+    employer_cla_file = 'employer_contributor_license_agreement.md'
+    FORMATTING_ERROR = ""
+    line_format_re = ""
+    extra_spaces_re = ""
+    single_qoutes_re = ""
+
+    if files_updated[0] == employer_cla_file:
+        FORMATTING_ERROR = "Line Format Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | employer name | country | dd-month-yyyy | \n"
+        # Regular expression for validating the line format
+        line_format_re = "\+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|[^\|]+\|[a-zA-Z\s\-]+\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
+        # Regular expression for checking extra spaces at the begining of the line
+        extra_spaces_re = "\+\s+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|[^\|]+\|[a-zA-Z\s\-]+\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
+        # Regular expression for checking single qoutes instead of back ticks
+        single_qoutes_re = "\+\|\s*'[A-Za-z]+(\s[A-Za-z]+)*'\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|[^\|]+\|[a-zA-Z\s\-]+\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
+        pass
+    else:
+        FORMATTING_ERROR = "Line Format Error: The expected line should be: | `full name` | [git-username](https://github.com/git-username) | dd-month-yyyy | \n"
+        line_format_re = "\+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
+        extra_spaces_re = "\+\s+\|\s*`[A-Za-z]+(\s[A-Za-z]+)*`\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
+        single_qoutes_re = "\+\|\s*'[A-Za-z]+(\s[A-Za-z]+)*'\s*\|\s*\[[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\]\(https:\/\/github\.com\/[a-zA-Z\d](?:[A-Za-z\d]|-(?=[a-zA-Z\d])){0,38}\)\s*\|\s*[\d]{2}-[a-zA-Z\d]+-[\d]{4}\s*\|"
+    
+    if re.match(line_format_re, line):
         print('Pass: Added line is of the specified format')
     elif re.match(extra_spaces_re, line):
         print(line)
@@ -293,8 +307,8 @@ def validate_if_already_signed(pr_raiser_login):
     
 
 # Change line is of the format "+| `full name`| [pr_raiser_login](https://github.com/pr_raiser_login) |12-july-2021|"
-def validate_change(pr_raiser_login, change):
-    ROW_FORMATTING_VALIDATION = validate_row_formatting(change)
+def validate_change(pr_raiser_login, files_updated, change):
+    ROW_FORMATTING_VALIDATION = validate_row_formatting(files_updated, change)
     GITHUBID_VALIDATION = validate_githubid(pr_raiser_login, change)
     DATE_VALIDATION = validate_date(change)
     ALREADY_SIGNED_VALIDATION = validate_if_already_signed(pr_raiser_login)
@@ -321,7 +335,7 @@ def validate_patch(pr_details):
         return task_failed('## Error: More than 1 line was added. \n   Please re-submit PR containing exactly one change adding your name to the CLA.\n')
     print(changes['textAdded'])
 
-    CHANGE_VALIDATION = validate_change(pr_details['pr_submitter_github_login'], changes['textAdded'])
+    CHANGE_VALIDATION = validate_change(pr_details['pr_submitter_github_login'], pr_details['files_updated'], changes['textAdded'])
     return CHANGE_VALIDATION
 
 def review_pr():
@@ -342,36 +356,62 @@ def review_pr():
     )
 
 
-review_pr()
+# review_pr()
+
+files_updated1 = ['personal_contributor_licence_agreement.md']
+files_updated2 = ['employer_contributor_license_agreement.md']
 
 # # Invalid row fomatting
-# EXPECTED_ERROR_MESSAGE = STATUS_FAILED
-# assert validate_change('naren', "+ `full name`| [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('naren', "lols") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('naren', "+| `full name` [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('naren', "+ `full name`| [nare") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('naren', "+       | `full name`|   [naren](https://github.com/naren)  |14-july-2021  |   ") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('psdhanesh7', "+| Dhanesh P S| [psdhanesh7](https://github.com/psdhanesh7)| 25-March-2022 |")
+EXPECTED_ERROR_MESSAGE = STATUS_FAILED
+# assert validate_change('naren', files_updated1, "+ `full name`| [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "lols") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "+| `full name` [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "+ `full name`| [nare") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "+       | `full name`|   [naren](https://github.com/naren)  |14-july-2021  |   ") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('psdhanesh7', files_updated1, "+| Dhanesh P S| [psdhanesh7](https://github.com/psdhanesh7)| 25-March-2022 |")
+
+# assert validate_change('naren', files_updated2, "+ `full name`| [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated2, "lols") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated2, "+| `full name` [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated2, "+ `full name`| [nare") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated2, "+       | `full name`|   [naren](https://github.com/naren)  |14-july-2021  |   ") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('psdhanesh7', files_updated2, "+| Dhanesh P S| [psdhanesh7](https://github.com/psdhanesh7)| 25-March-2022 |")
 
 # # success case
 # EXPECTED_SUCCESS_MESSAGE = "ok"
-# assert validate_change('newuser', "+| `full name user` | [newuser](https://github.com/newuser) | 25-march-2022 |") == EXPECTED_SUCCESS_MESSAGE
-# assert validate_change('newuser', "+|`full name user`|[newuser](https://github.com/newuser)|26-march-2022|") == EXPECTED_SUCCESS_MESSAGE
-# assert validate_change('newuser', "+|  `full name user`   |    [newuser](https://github.com/newuser)   |  26-march-2022  |") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', files_updated1, "+| `full name user` | [newuser](https://github.com/newuser) | 25-march-2022 |") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', files_updated1, "+|`full name user`|[newuser](https://github.com/newuser)|26-march-2022|") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', files_updated1, "+|  `full name user`   |    [newuser](https://github.com/newuser)   |  26-march-2022  |") == EXPECTED_SUCCESS_MESSAGE
 
-# # user names should be valid
+# assert validate_change('newuser', files_updated2, "+| `full name user` | [newuser](https://github.com/newuser) |abcd.pvt.ltd| India | 25-march-2022 |") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', files_updated2, "+|`full name user`|[newuser](https://github.com/newuser)|abcd.pvt.ltd| India | 26-march-2022|") == EXPECTED_SUCCESS_MESSAGE
+# assert validate_change('newuser', files_updated2, "+|  `full name user`   |    [newuser](https://github.com/newuser)   |abcd.pvt.ltd| India |   26-march-2022  |") == EXPECTED_SUCCESS_MESSAGE
+
+# user names should be valid
 # EXPECTED_ERROR_MESSAGE = STATUS_FAILED
-# assert validate_change('naren', "+| `full name`| [psdhanesh](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
-# assert validate_change('naren', "+| `full name`| [naren](https://github.com/psdhanesh7) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
-# assert validate_change('naren', "+| 'full name'| [naren](https://github.com/some_wrong_user) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "+| `full name`| [psdhanesh](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', files_updated1, "+| `full name`| [naren](https://github.com/psdhanesh7) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', files_updated1, "+| 'full name'| [naren](https://github.com/some_wrong_user) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+
+# assert validate_change('naren', files_updated2, "+| `full name`| [psdhanesh](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', files_updated2, "+| `full name`| [naren](https://github.com/psdhanesh7) |14-july-2021|") == EXPECTED_ERROR_MESSAGE 
+# assert validate_change('naren', files_updated2, "+| 'full name'| [naren](https://github.com/some_wrong_user) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
 
 # DATE_ERROR_MESSAGE = STATUS_FAILED
-# assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) |10-March-2022|") == DATE_ERROR_MESSAGE
-# assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) |14-06-2021|") == DATE_ERROR_MESSAGE
-# assert validate_change('naren', "+| `full name`| [naren](https://github.com/naren) ||") == DATE_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "+| `full name`| [naren](https://github.com/naren) |10-March-2022|") == DATE_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "+| `full name`| [naren](https://github.com/naren) |14-06-2021|") == DATE_ERROR_MESSAGE
+# assert validate_change('naren', files_updated1, "+| `full name`| [naren](https://github.com/naren) ||") == DATE_ERROR_MESSAGE
+
+# assert validate_change('naren', files_updated2, "+| `full name`| [naren](https://github.com/naren) |10-March-2022|") == DATE_ERROR_MESSAGE
+# assert validate_change('naren', files_updated2, "+| `full name`| [naren](https://github.com/naren) |14-06-2021|") == DATE_ERROR_MESSAGE
+# assert validate_change('naren', files_updated2, "+| `full name`| [naren](https://github.com/naren) ||") == DATE_ERROR_MESSAGE
 
 # # check if already signed
 # EXPECTED_ERROR_MESSAGE = STATUS_FAILED
-# assert validate_change('Njay2000', "+| `full name`| [Njay2000](https://github.com/Njay2000) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('mathewdennis1', "+| `full name`| [mathewdennis1](https://github.com/mathewdennis1) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
-# assert validate_change('hello', "+| `full name`| [hello](https://github.com/hello) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('Njay2000', files_updated1, "+| `full name`| [Njay2000](https://github.com/Njay2000) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('mathewdennis1', files_updated1, "+| `full name`| [mathewdennis1](https://github.com/mathewdennis1) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('hello', files_updated1, "+| `full name`| [hello](https://github.com/hello) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+
+# assert validate_change('Njay2000', files_updated2, "+| `full name`| [Njay2000](https://github.com/Njay2000) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('mathewdennis1', files_updated2, "+| `full name`| [mathewdennis1](https://github.com/mathewdennis1) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+# assert validate_change('hello', files_updated2, "+| `full name`| [hello](https://github.com/hello) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
