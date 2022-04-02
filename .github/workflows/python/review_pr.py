@@ -356,13 +356,13 @@ def review_pr():
     )
 
 
-# review_pr()
+review_pr()
 
-files_updated1 = ['personal_contributor_licence_agreement.md']
-files_updated2 = ['employer_contributor_license_agreement.md']
+# files_updated1 = ['personal_contributor_licence_agreement.md']
+# files_updated2 = ['employer_contributor_license_agreement.md']
 
 # # Invalid row fomatting
-EXPECTED_ERROR_MESSAGE = STATUS_FAILED
+# EXPECTED_ERROR_MESSAGE = STATUS_FAILED
 # assert validate_change('naren', files_updated1, "+ `full name`| [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('naren', files_updated1, "lols") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('naren', files_updated1, "+| `full name` [naren](https://github.com/naren) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
@@ -415,3 +415,5 @@ EXPECTED_ERROR_MESSAGE = STATUS_FAILED
 # assert validate_change('Njay2000', files_updated2, "+| `full name`| [Njay2000](https://github.com/Njay2000) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('mathewdennis1', files_updated2, "+| `full name`| [mathewdennis1](https://github.com/mathewdennis1) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
 # assert validate_change('hello', files_updated2, "+| `full name`| [hello](https://github.com/hello) |14-july-2021|") == EXPECTED_ERROR_MESSAGE
+
+# assert validate_change('psdhanesh7', files_updated2, "+| `Dhanesh P S` | [psdhanesh7](https://github.com/psdhanesh7) | Core.ai Scientific Technologies Private Ltd. |India |14-June-2021|") == STATUS_FAILED
