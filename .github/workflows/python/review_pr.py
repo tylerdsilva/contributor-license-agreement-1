@@ -193,6 +193,18 @@ def validate_has_only_a_single_file_change(pr_details):
         return task_failed(message)
     print('Pass: Pull request has only a single file change.')
 
+    return validate_changed_file_name(files_updated)
+
+
+def validate_changed_file_name(files_updated):
+    employer_cla_file = 'employer_contributor_license_agreement.md'
+    personal_cla_file = 'personal_contributor_licence_agreement.md'
+
+    updated_file_name = files_updated[0]
+    if updated_file_name != employer_cla_file and updated_file_name != personal_cla_file:
+        return STATUS_FAILED
+    print('Pass: Alterations to the correct file.')
+
 
 def getChanges(patch_details):
     diff_details = get_diff_details(patch_details)
@@ -328,6 +340,9 @@ def validate_patch(pr_details):
     if response.status_code != 200:
         task_failed('Could not get pull request details')
         sys.exit(1)
+    
+    if validate_changed_file_name(pr_details['files_updated']) == STATUS_FAILED:
+        return task_failed('## Error: Changes were performed to the incorrect file. Either personal_contributor_license_agreement.md or employer_contributer_license_agreement.md should be changed in the pull request.')
     changes = getChanges(response.text)
     if changes['linesRemoved'] !=0:
         return task_failed('## Error: Some lines were removed. \n    Please re-submit PR containing exactly one change adding your name to the CLA.\n')
