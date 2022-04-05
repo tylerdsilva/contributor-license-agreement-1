@@ -342,7 +342,7 @@ def validate_patch(pr_details):
         sys.exit(1)
     
     if validate_changed_file_name(pr_details['files_updated']) == STATUS_FAILED:
-        return task_failed('## Error: Changes were performed to the incorrect file. Either personal_contributor_license_agreement.md or employer_contributer_license_agreement.md should be changed in the pull request.')
+        return task_failed('## Error: Changes were performed to the incorrect file. \n Either personal_contributor_license_agreement.md or employer_contributer_license_agreement.md should be changed in the pull request.')
     changes = getChanges(response.text)
     if changes['linesRemoved'] !=0:
         return task_failed('## Error: Some lines were removed. \n    Please re-submit PR containing exactly one change adding your name to the CLA.\n')
