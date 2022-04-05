@@ -63,5 +63,4 @@ I agree with all the terms and conditions above by providing my details in **tab
 
 | Name (“You”) | Github ID | Employer | Country | Date |
 | --- | --- | --- | --- | --- |
-| `Arun Bose` | [abose](https://github.com/abose) | Core.ai Scientific Technologies Private Ltd. |India |12-June-2021|
 | `Mathew Dennis` | [mathewdennis1](https://github.com/mathewdennis1) | Core.ai Scientific Technologies Private Ltd. |India |14-June-2021|
