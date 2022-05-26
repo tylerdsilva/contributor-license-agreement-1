@@ -64,3 +64,4 @@ I agree with all the terms and conditions above by providing my details in **tab
 | Name (“You”) | Github ID | Employer | Country | Date |
 | --- | --- | --- | --- | --- |
 | `Mathew Dennis` | [mathewdennis1](https://github.com/mathewdennis1) | Core.ai Scientific Technologies Private Ltd. |India |14-June-2021|
+| `Phoenix Code Bot` | [Phoenix Code Bot](https://github.com/phoenixide) | Excemted ci tool account. |India |26-may-2021|
