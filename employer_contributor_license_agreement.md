@@ -64,4 +64,5 @@ I agree with all the terms and conditions above by providing my details in **tab
 | Name (“You”) | Github ID | Employer | Country | Date |
 | --- | --- | --- | --- | --- |
 | `Mathew Dennis` | [mathewdennis1](https://github.com/mathewdennis1) | Core.ai Scientific Technologies Private Ltd. |India |14-June-2021|
-| `Core.ai bot` | [Core.ai bot](https://github.com/core-ai-bot) | Excemted ci tool account. |India |26-may-2021|
+| `Core.ai bot` | [Core.ai bot](https://github.com/core-ai-bot) | Excempted ci tool account. |India |26-may-2021|
+| `rennovate bot` | [renovate[bot]](https://github.com/renovatebot) | Excempted ci tool account. |India |29-June-2021|
